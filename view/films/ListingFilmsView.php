@@ -6,7 +6,7 @@
     <thead>
         <tr>
             <th>Titre</th>
-            <th>ANNEE SORTIE</th>
+            <th>Année de sortie</th>
         </tr>
     </thead>
     <tbody>
@@ -14,7 +14,7 @@
             foreach($requete->fetchAll() as $film) { ?>
                 <tr>
                     <td><?= $film["titre"] ?></td>
-                    <td><?= $film["annee_sortie"] ?></td>
+                    <td><?= $film["dateSortie"] ?></td>
                 </tr>
         <?php } ?>
     </tbdoy>

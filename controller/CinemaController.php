@@ -14,6 +14,30 @@ class CinemaController {
             From film
         ");
 
-        require "view/listFilms.php";
+        require "view/films/ListingFilmView.php";
+    }
+
+    //** Lister les acteurs*/
+    public function listActeurs() {
+
+        $pdo = Connect::seConnecter();
+        $requette = $pdo->query("
+            SELECT prenom, nom
+            From acteur
+        ");
+
+        require "view/acteurs/ListingActeursView.php";
+    }
+
+    //** Lister les realisateurs*/
+    public function listRealisateurs() {
+
+        $pdo = Connect::seConnecter();
+        $requette = $pdo->query("
+            SELECT prenom, nom
+            From realisateur
+        ");
+
+        require "view/realisateurs/ListingRealisateursView.php";
     }
 }
