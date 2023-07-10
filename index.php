@@ -26,8 +26,8 @@ if(isset($_GET["action"])){
     <body>
         <main>
             <div id="contenu">
-                <h1 class ="">PDO Cinema</h1>
-                <h2 class=""><?= $titre_secondaire ?></h2>
+                <h1>PDO Cinema</h1>
+                <h2><?= $titre_secondaire ?></h2>
                 <?= $contenu ?>
             </div>
         </main>
