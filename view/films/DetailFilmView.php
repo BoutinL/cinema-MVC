@@ -1,7 +1,12 @@
-<?php ob_start(); ?>
+<?php 
+    ob_start(); 
+    $film = $requete->fetch();
+?>
 
 <section class="detail-film">
-<h3><?= $film = $requete->fetch(); echo $film['titre'] ?></h3>
+<h3>Nom du film : <?= $film['titre'] ?></h3>
+<p>Note : <?= $film['note'] ?></p>
+<p>Note : <?= $film['note'] ?></p>
 </section>
 <section class="casting">
     <table>
@@ -14,11 +19,11 @@
         </thead>
         <tbody>
             <?php
-                foreach($requete->fetchAll() as $acteur) { ?>
+                foreach($requeteCasting->fetchAll() as $acteur) { ?>
                     <tr>
-                        <td ><?= $acteur["prenom"] ?></td>
-                        <td><?= $acteur["nom"] ?></td>
-                        <td><?= $acteur["role"] ?></td>
+                        <td ><?= $acteur[ "prenom" ] ?></td>
+                        <td><?= $acteur[ "nomActeur" ] ?></td>
+                        <td><?= $acteur[ "nomRole" ] ?></td>
                     </tr>
             <?php } ?>
         </tbdoy>
@@ -26,7 +31,7 @@
 </section>
 <?php
 
-$titre = $film['titre'];
-$titre_secondaire = "Détails du film". $film['titre'];
+$titre = $film[ 'titre' ];
+$titre_secondaire = " Détails du film ". $film[ 'titre' ];
 $contenu = ob_get_clean();
 require "view/template.php";

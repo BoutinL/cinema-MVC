@@ -52,7 +52,19 @@ class CinemaController {
             FROM film f
             WHERE id_film = :id
         ");
+
         $requete->execute(["id" => $id]);
+
+        $requeteCasting = $pdo->prepare("
+            SELECT prenom, p.nom AS nomActeur, r.nom AS nomRole
+            FROM personne p
+            INNER JOIN acteur a ON p.id_personne = a.personne_id
+            INNER JOIN jouer j ON a.id_acteur = j.acteur_id
+            INNER JOIN role r ON r.id_role = j.role_id
+            WHERE j.film_id = :id
+        ");
+
+        $requeteCasting->execute(["id" => $id]);
 
         require "view/films/DetailFilmView.php";
     }
