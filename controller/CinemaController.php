@@ -9,21 +9,22 @@ class CinemaController {
     public function listFilms() {
 
         $pdo = Connect::seConnecter();
-        $requette = $pdo->query("
-            SELECT titre, annee_sortie
-            From film
+        $requete = $pdo->query("
+            SELECT titre, dateSortie
+            FROM film
         ");
 
-        require "view/films/ListingFilmView.php";
+        require "view/films/ListingFilmsView.php";
     }
 
     //** Lister les acteurs*/
     public function listActeurs() {
 
         $pdo = Connect::seConnecter();
-        $requette = $pdo->query("
+        $requete = $pdo->query("
             SELECT prenom, nom
-            From acteur
+            FROM personne p
+            INNER JOIN acteur a ON p.id_personne = a.personne_id
         ");
 
         require "view/acteurs/ListingActeursView.php";
@@ -33,9 +34,10 @@ class CinemaController {
     public function listRealisateurs() {
 
         $pdo = Connect::seConnecter();
-        $requette = $pdo->query("
+        $requete = $pdo->query("
             SELECT prenom, nom
-            From realisateur
+            FROM personne p
+            INNER JOIN realisateur r ON p.id_personne = r.personne_id
         ");
 
         require "view/realisateurs/ListingRealisateursView.php";

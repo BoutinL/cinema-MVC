@@ -10,9 +10,9 @@
         <main>
             <nav class="navbar">
                 <ul>
-                    <a href="films/ListingRealisateurView.php">Films</a>
-                    <a href="">Acteurs</a>
-                    <a href="">Réalisateurs</a>
+                    <a href='index.php?action=listFilms'>Films</a>
+                    <a href='index.php?action=listActeurs'>Acteurs</a>
+                    <a href='index.php?action=listRealisateurs'>Réalisateurs</a>
                 </ul>
             </nav>
             <div id="contenu">

@@ -14,7 +14,7 @@
             foreach($requete->fetchAll() as $film) { ?>
                 <tr>
                     <td><?= $film["titre"] ?></td>
-                    <td><?= $film["dateSortie"] ?></td>
+                    <td><?= $film["dateSortie"]?></td>
                 </tr>
         <?php } ?>
     </tbdoy>
