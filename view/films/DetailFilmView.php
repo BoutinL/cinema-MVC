@@ -1,8 +1,9 @@
 <?php ob_start(); ?>
 
-<section class="casting">
-
+<section class="detail-film">
+<h3><?= $film = $requete->fetch(); echo $film['titre'] ?></h3>
 </section>
+<section class="casting">
     <table>
         <thead>
             <tr>
@@ -22,9 +23,10 @@
             <?php } ?>
         </tbdoy>
     </table>
+</section>
 <?php
 
-$titre = " <?= $film['titre'] ?>";
-$titre_secondaire = "Détails du film: <?= $film['titre'] ?>";
+$titre = $film['titre'];
+$titre_secondaire = "Détails du film". $film['titre'];
 $contenu = ob_get_clean();
 require "view/template.php";
