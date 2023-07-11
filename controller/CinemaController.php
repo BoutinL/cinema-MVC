@@ -42,4 +42,22 @@ class CinemaController {
 
         require "view/realisateurs/ListingRealisateursView.php";
     }
+
+    //** Détail d'un film*/
+    public function detailFilm($id) {
+
+        $pdo = Connect::seConnecter();
+        $requete = $pdo->prepare("
+            SELECT *
+            FROM film f
+            INNER JOIN posseder p ON f.id_film = p.film_id
+            INNER JOIN jouer j ON f.id_film = j.film_id
+            INNER JOIN acteur a ON j.id_acteur = a.acteur_id
+            INNER JOIN personne pers ON a.id_personne = pers.personne_id
+            WHERE id_film = :id
+        ");
+        $requete->execute(["id" => $id]);
+
+        require "view/films/DetailFilm.php";
+    }
 }
