@@ -36,7 +36,7 @@
             <?php
                 foreach($requeteCasting->fetchAll() as $acteur) { ?>
                     <tr>
-                        <td><a href='index.php?action=detailActeur&id=<?= $acteur["id_acteur"] ?>'><?= $acteur[ "prenom" ] ?></a></td>
+                        <td><a href='index.php?action=detailActeur&id=<?= $acteur["id_personne"] ?>'><?= $acteur[ "prenom" ] ?></a></td>
                         <td><a href=''><?= $acteur[ "nomActeur" ] ?></a></td>
                         <td><?= $acteur[ "nomRole" ] ?></td>
                     </tr>

@@ -1,6 +1,9 @@
 <?php 
     ob_start(); 
+
+    // fetch
     $acteur = $requeteActeur->fetch();
+
     // conversion au format d-m-Y
     $dateNaissanceAncienFormat = $acteur['dateNaissance'];
     $dateNaissanceNouveauFormat = date('d-m-Y', strtotime($dateNaissanceAncienFormat));
@@ -17,7 +20,7 @@
     <table>
         <thead>
             <tr>
-                <th>Titre</th>
+                <th>Titre du film</th>
                 <th>Année de sortie</th>
             </tr>
         </thead>
@@ -34,7 +37,7 @@
 </section>
 <?php
 
-$titre = $film[ 'titre' ];
-$titre_secondaire = " Détails du film ". $film[ 'titre' ];
+$titre = $acteur[ 'prenom' ]." ".$acteur[ 'nom' ];
+$titre_secondaire = " Détails de l'acteur : ".$acteur[ 'prenom' ]." ".$acteur[ 'nom' ];
 $contenu = ob_get_clean();
 require "view/template.php";

@@ -56,7 +56,7 @@ class CinemaController {
         $requete->execute(["id" => $id]);
 
         $requeteCasting = $pdo->prepare("
-            SELECT prenom, p.nom AS nomActeur, r.nom AS nomRole
+            SELECT prenom, p.nom AS nomActeur, r.nom AS nomRole, id_personne
             FROM personne p
             INNER JOIN acteur a ON p.id_personne = a.personne_id
             INNER JOIN jouer j ON a.id_acteur = j.acteur_id
@@ -74,7 +74,7 @@ class CinemaController {
             WHERE f.id_film = :id
         ");
 
-    $requeteRealisateur->execute(["id" => $id]);
+        $requeteRealisateur->execute(["id" => $id]);
 
         require "view/films/DetailFilmView.php";
     }
@@ -84,14 +84,14 @@ class CinemaController {
     public function detailActeur($id) {
 
         $pdo = Connect::seConnecter();
-        $requete = $pdo->prepare("
+        $requeteDetailActeur = $pdo->prepare("
             SELECT *
             FROM personne p
             INNER JOIN acteur a ON p.id_personne = a.personne_id
-            WHERE id_acteur = :id
+            WHERE p.id_personne = :id
         ");
 
-        $requete->execute(["id" => $id]);
+        $requeteDetailActeur->execute(["id" => $id]);
 
         require "view/acteurs/DetailActeurView.php";
     }
