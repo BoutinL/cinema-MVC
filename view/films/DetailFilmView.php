@@ -1,10 +1,13 @@
 <?php 
     ob_start(); 
+    // fetch
     $film = $requete->fetch();
     $realisateur = $requeteRealisateur->fetch();
+
     // conversion au format d-m-Y
     $dateSortieAncienFormat = $film['dateSortie'];
     $dateSortieNouveauFormat = date('d-m-Y', strtotime($dateSortieAncienFormat));
+
     // conversion minutes au format h:m
     $minutes = $film['dureeMinutes'];
     $heures = floor($minutes / 60); // Obtient le nombre d'heures entières
@@ -34,7 +37,7 @@
                 foreach($requeteCasting->fetchAll() as $acteur) { ?>
                     <tr>
                         <td><a href='index.php?action=detailActeur&id=<?= $acteur["id_acteur"] ?>'><?= $acteur[ "prenom" ] ?></a></td>
-                        <td><a href=""><?= $acteur[ "nomActeur" ] ?></a></td>
+                        <td><a href=''><?= $acteur[ "nomActeur" ] ?></a></td>
                         <td><?= $acteur[ "nomRole" ] ?></td>
                     </tr>
             <?php } ?>

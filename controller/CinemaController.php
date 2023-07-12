@@ -67,12 +67,12 @@ class CinemaController {
         $requeteCasting->execute(["id" => $id]);
 
         $requeteRealisateur = $pdo->prepare("
-        SELECT prenom, nom
-        FROM personne p
-        INNER JOIN realisateur r ON p.id_personne = r.personne_id
-        INNER JOIN film f ON r.id_realisateur = f.realisateur_id
-        WHERE f.id_film = :id
-    ");
+            SELECT prenom, nom
+            FROM personne p
+            INNER JOIN realisateur r ON p.id_personne = r.personne_id
+            INNER JOIN film f ON r.id_realisateur = f.realisateur_id
+            WHERE f.id_film = :id
+        ");
 
     $requeteRealisateur->execute(["id" => $id]);
 
