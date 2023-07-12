@@ -1,11 +1,23 @@
 <?php 
     ob_start(); 
     $film = $requete->fetch();
+    $realisateur = $requeteRealisateur->fetch();
+    // conversion au format d-m-Y
+    $dateSortieAncienFormat = $film['dateSortie'];
+    $dateSortieNouveauFormat = date('d-m-Y', strtotime($dateSortieAncienFormat));
+    // conversion minutes au format h:m
+    $minutes = $film['dureeMinutes'];
+    $heures = floor($minutes / 60); // Obtient le nombre d'heures entières
+    $minutesRestantes = $minutes % 60; // Obtient le nombre de minutes restantes
+    $heureMinute = sprintf("%02d:%02d", $heures, $minutesRestantes);
 ?>
 
 <section class="detail-film">
 <h3>Nom du film : <?= $film['titre'] ?></h3>
-<p>Note : <?= $film['note'] ?></p>
+<img src="<?= $film['affiche'] ?>" alt="">
+<p>Réalisateur : <?= $realisateur['prenom']." ".$realisateur['nom'] ?></p>
+<p>Date de sortie : <?= $dateSortieNouveauFormat ?></p>
+<p>Durée : <?= $heureMinute ?></p>
 <p>Note : <?= $film['note'] ?></p>
 </section>
 <section class="casting">
@@ -21,8 +33,8 @@
             <?php
                 foreach($requeteCasting->fetchAll() as $acteur) { ?>
                     <tr>
-                        <td ><?= $acteur[ "prenom" ] ?></td>
-                        <td><?= $acteur[ "nomActeur" ] ?></td>
+                        <td><a href='index.php?action=detailActeur&id=<?= $acteur["id_acteur"] ?>'><?= $acteur[ "prenom" ] ?></a></td>
+                        <td><a href=""><?= $acteur[ "nomActeur" ] ?></a></td>
                         <td><?= $acteur[ "nomRole" ] ?></td>
                     </tr>
             <?php } ?>
