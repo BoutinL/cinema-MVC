@@ -47,6 +47,7 @@ class CinemaController {
     public function detailFilm($id) {
 
         $pdo = Connect::seConnecter();
+
         $requete = $pdo->prepare("
             SELECT *
             FROM film f
@@ -54,6 +55,15 @@ class CinemaController {
         ");
 
         $requete->execute(["id" => $id]);
+
+        $requeteGenre = $pdo->prepare("
+            SELECT nom
+            FROM genre g
+            INNER JOIN posseder p ON g.id_genre = p.genre_id
+            WHERE film_id = :id
+        ");
+
+        $requeteGenre->execute(["id" => $id]);
 
         $requeteCasting = $pdo->prepare("
             SELECT prenom, p.nom AS nomActeur, r.nom AS nomRole, id_personne

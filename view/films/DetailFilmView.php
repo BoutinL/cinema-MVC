@@ -2,7 +2,14 @@
     ob_start(); 
     // fetch
     $film = $requete->fetch();
+    $genre = $requeteGenre->fetchAll();
     $realisateur = $requeteRealisateur->fetch();
+
+    // string qui rassemble les genres d'un même film
+    $types="";
+    foreach( $genre as $type ){
+        $types .= $type["nom"]. " ";
+    }
 
     // conversion au format d-m-Y
     $dateSortieAncienFormat = $film['dateSortie'];
@@ -18,6 +25,7 @@
 <section class="detail-film">
 <h3>Nom du film : <?= $film['titre'] ?></h3>
 <img src="<?= $film['affiche'] ?>" alt="">
+<p>Genre(s) : <?= $types ?></p>
 <p>Réalisateur : <?= $realisateur['prenom']." ".$realisateur['nom'] ?></p>
 <p>Date de sortie : <?= $dateSortieNouveauFormat ?></p>
 <p>Durée : <?= $heureMinute ?></p>
@@ -37,7 +45,7 @@
                 foreach($requeteCasting->fetchAll() as $acteur) { ?>
                     <tr>
                         <td><a href='index.php?action=detailActeur&id=<?= $acteur["id_personne"] ?>'><?= $acteur[ "prenom" ] ?></a></td>
-                        <td><a href=''><?= $acteur[ "nomActeur" ] ?></a></td>
+                        <td><a href='index.php?action=detailActeur&id=<?= $acteur["id_personne"] ?>'><?= $acteur[ "nomActeur" ] ?></a></td>
                         <td><?= $acteur[ "nomRole" ] ?></td>
                     </tr>
             <?php } ?>
