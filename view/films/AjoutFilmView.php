@@ -1,21 +1,19 @@
-<?php 
-    ob_start(); 
-?>
+<?php ob_start(); ?>
 
 <section class="form-ajout-film">
-    <form action="" method="GET">
+    <form action="index.php?action=ajouterNouveauFilm" method="post">
         <label for="titre">Titre :</label>
-        <input type="text" id="titre" name="titre" required>
+        <input type="text" id="titre" name="titre" required><br/>
         <label for="dateSortie">Date de sortie :</label>
-        <input type="date" id="dateSortie" name="dateSortie" required>
+        <input type="date" id="dateSortie" name="dateSortie"><br/>
         <label for="dureeMinutes">Durée en minutes :</label>
-        <input type="number" min="0" id="dureeMinutes" name="dureeMinutes">
+        <input type="number" min="0" id="dureeMinutes" name="dureeMinutes"><br/>
         <label for="note">Note :</label>
-        <input type="number" min="0" max="5" id="note" name="note">
+        <input type="number" min="0" max="5" id="note" name="note"><br/>
         <label for="affiche">Url de l'affiche :</label>
-        <input type="text" id="affiche" name="affiche">
+        <input type="text" id="affiche" name="affiche"><br/>
         <label for="realisateur">Realisateur :</label>
-        <select id="realisateur" name="realisateur" required>
+        <select id="realisateur" name="realisateur" required><br/>
         <?php 
             foreach($requeteListeRealisateur->fetchAll() as $realisateur){
                 $id = $realisateur['id_realisateur'];

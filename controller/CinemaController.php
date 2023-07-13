@@ -159,4 +159,31 @@ class CinemaController {
 
         }
 
+        public function ajouterNouveauFilm(){
+
+            if(isset($_POST['submit'])){
+                $titre = filter_input(INPUT_POST, "titre", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $dateSortie = filter_input(INPUT_POST, "dateSortie", FILTER_SANITIZE_SPECIAL_CHARS);
+                $dureeMinutes = filter_input(INPUT_POST, "dureeMinutes", FILTER_VALIDATE_INT);
+                $note = filter_input(INPUT_POST, "note", FILTER_VALIDATE_INT);
+                $affiche = filter_input(INPUT_POST, "affiche", FILTER_SANITIZE_URL);
+                $realisateur = filter_input(INPUT_POST, "realisateur", FILTER_SANITIZE_SPECIAL_CHARS);
+            
+                if($titre && $dateSortie && $dureeMinutes && $note && $affiche && $realisateur){
+
+                    $pdo = Connect::seConnecter();
+                    $requeteAjoutNouveauFilm = $pdo->prepare("
+                        INSERT INTO film (titre, dateSortie, dureeMinutes, note, affiche, realisateur_id) 
+                        VALUES ('?', '?', ?, ?, '?', '?');
+                    ");
+        
+                    $requeteAjoutNouveauFilm->execute();
+        
+                    require "view/films/AjoutFilmView.php";
+                }
+                header("Location:index.php?action=listingFilmsView"); exit;
+            }
+
+        }
+
 }
