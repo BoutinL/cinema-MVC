@@ -18,6 +18,7 @@
     <table>
         <thead>
             <tr>
+                <th>Rôle</th>
                 <th>Titre du film</th>
                 <th>Année de sortie</th>
             </tr>
@@ -26,6 +27,7 @@
             <?php
                 foreach($requeteFilmDate->fetchAll() as $film) { ?>
                     <tr>
+                        <td><?= $film[ "nom" ] ?></td>
                         <td><a href='index.php?action=detailFilm&id=<?= $film["id_film"] ?>'><?= $film[ "titre" ] ?></a></td>
                         <td><?= date("Y", strtotime($film[ "dateSortie" ]))  ?></td>
                     </tr>

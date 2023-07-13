@@ -104,9 +104,10 @@ class CinemaController {
         $requeteDetailActeur->execute(["id" => $id]);
 
         $requeteFilmDate = $pdo->prepare("
-            SELECT titre, dateSortie, id_film
+            SELECT titre, dateSortie, id_film, nom
             FROM film f
             INNER JOIN jouer j ON f.id_film = j.film_id
+            INNER JOIN role r ON j.role_id = r.id_role
             WHERE acteur_id = :id
         ");
 
@@ -138,6 +139,24 @@ class CinemaController {
     
             $requeteFilmDate->execute(["id" => $id]);
     
-            require "view/realisateurs  /DetailRealisateurView.php";
+            require "view/realisateurs/DetailRealisateurView.php";
         }
+
+        // Ajouter un film
+
+        public function afficherRealisateurs(){
+
+            $pdo = Connect::seConnecter();
+            $requeteListeRealisateur = $pdo->prepare("
+                SELECT *
+                FROM personne p
+                INNER JOIN realisateur r ON p.id_personne = r.personne_id
+            ");
+    
+            $requeteListeRealisateur->execute();
+
+            require "view/films/AjoutFilmView.php";
+
+        }
+
 }

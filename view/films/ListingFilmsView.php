@@ -1,6 +1,7 @@
 <?php ob_start();?>
 
-<p>Il y a <?= $requete->rowCount() ?> films</p>
+<p>Il y a <?= $requete->rowCount() ?> films</p> 
+<a type="button" href='index.php?action=afficherRealisateurs'>Ajouter un film</a>
 
 <table>
     <thead>
