@@ -103,6 +103,15 @@ class CinemaController {
 
         $requeteDetailActeur->execute(["id" => $id]);
 
+        $requeteFilmDate = $pdo->prepare("
+            SELECT titre, dateSortie
+            FROM film f
+            INNER JOIN jouer j ON f.id_film = j.film_id
+            WHERE acteur_id = :id
+        ");
+
+        $requeteFilmDate->execute(["id" => $id]);
+
         require "view/acteurs/DetailActeurView.php";
     }
 }

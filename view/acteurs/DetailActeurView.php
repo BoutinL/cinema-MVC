@@ -2,19 +2,17 @@
     ob_start(); 
 
     // fetch
-    $acteur = $requeteActeur->fetch();
+    $acteur = $requeteDetailActeur->fetch();
 
     // conversion au format d-m-Y
     $dateNaissanceAncienFormat = $acteur['dateNaissance'];
     $dateNaissanceNouveauFormat = date('d-m-Y', strtotime($dateNaissanceAncienFormat));
-    $dateSortieAncienFormat = $film['dateSortie'];
-    $dateSortieNouveauFormat = date('Y', strtotime($dateSortieAncienFormat));
 ?>
 
 <section class="detail-acteur">
-<h3>Prénom : <?= $acteur['prenom'] ?></h3>
-<h3>Nom : <?= $acteur['nom'] ?></h3>
-<p>Date de naissance : <?= $dateNaissanceNouveauFormat ?></p>
+    <h3>Prénom : <?= $acteur['prenom'] ?></h3>
+    <h3>Nom : <?= $acteur['nom'] ?></h3>
+    <p>Date de naissance : <?= $dateNaissanceNouveauFormat ?></p>
 </section>
 <section class="filmographie">
     <table>
@@ -26,10 +24,10 @@
         </thead>
         <tbody>
             <?php
-                foreach($requeteFilmographie->fetchAll() as $acteur) { ?>
+                foreach($requeteFilmDate->fetchAll() as $film) { ?>
                     <tr>
-                        <td><a href=''><?= $acteur[ "titre" ] ?></a></td>
-                        <td><a href=""><?= $dateSortieNouveauFormat ?></a></td>
+                        <td><a href=''><?= $film[ "titre" ] ?></a></td>
+                        <td><a href=''><?= date("Y", strtotime($film[ "dateSortie" ]))  ?></a></td>
                     </tr>
             <?php } ?>
         </tbdoy>
