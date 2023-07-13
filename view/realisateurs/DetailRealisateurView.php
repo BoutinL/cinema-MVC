@@ -2,16 +2,16 @@
     ob_start(); 
 
     // fetch
-    $acteur = $requeteDetailActeur->fetch();
+    $realisateur = $requeteDetailRealisateur->fetch();
 
     // conversion au format d-m-Y
-    $dateNaissanceAncienFormat = $acteur['dateNaissance'];
+    $dateNaissanceAncienFormat = $realisateur['dateNaissance'];
     $dateNaissanceNouveauFormat = date('d-m-Y', strtotime($dateNaissanceAncienFormat));
 ?>
 
-<section class="detail-acteur">
-    <h3>Prénom : <?= $acteur['prenom'] ?></h3>
-    <h3>Nom : <?= $acteur['nom'] ?></h3>
+<section class="detail-realisateur">
+    <h3>Prénom : <?= $realisateur['prenom'] ?></h3>
+    <h3>Nom : <?= $realisateur['nom'] ?></h3>
     <p>Date de naissance : <?= $dateNaissanceNouveauFormat ?></p>
 </section>
 <section class="filmographie">
@@ -35,7 +35,7 @@
 </section>
 <?php
 
-$titre = $acteur[ 'prenom' ]." ".$acteur[ 'nom' ];
-$titre_secondaire = " Détails de l'acteur : ".$acteur[ 'prenom' ]." ".$acteur[ 'nom' ];
+$titre = $realisateur[ 'prenom' ]." ".$realisateur[ 'nom' ];
+$titre_secondaire = " Détails du réalisateur : ".$realisateur[ 'prenom' ]." ".$realisateur[ 'nom' ];
 $contenu = ob_get_clean();
 require "view/template.php";

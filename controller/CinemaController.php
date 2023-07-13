@@ -22,7 +22,7 @@ class CinemaController {
 
         $pdo = Connect::seConnecter();
         $requete = $pdo->query("
-            SELECT prenom, nom
+            SELECT prenom, nom, id_personne
             FROM personne p
             INNER JOIN acteur a ON p.id_personne = a.personne_id
         ");
@@ -35,7 +35,7 @@ class CinemaController {
 
         $pdo = Connect::seConnecter();
         $requete = $pdo->query("
-            SELECT prenom, nom
+            SELECT prenom, nom, id_personne
             FROM personne p
             INNER JOIN realisateur r ON p.id_personne = r.personne_id
         ");
@@ -104,7 +104,7 @@ class CinemaController {
         $requeteDetailActeur->execute(["id" => $id]);
 
         $requeteFilmDate = $pdo->prepare("
-            SELECT titre, dateSortie
+            SELECT titre, dateSortie, id_film
             FROM film f
             INNER JOIN jouer j ON f.id_film = j.film_id
             WHERE acteur_id = :id
@@ -114,4 +114,30 @@ class CinemaController {
 
         require "view/acteurs/DetailActeurView.php";
     }
+
+        // detail d'un realisateur
+
+        public function detailRealisateur($id) {
+
+            $pdo = Connect::seConnecter();
+            $requeteDetailRealisateur = $pdo->prepare("
+                SELECT *
+                FROM personne p
+                INNER JOIN realisateur r ON p.id_personne = r.personne_id
+                WHERE p.id_personne = :id
+            ");
+    
+            $requeteDetailRealisateur->execute(["id" => $id]);
+    
+            $requeteFilmDate = $pdo->prepare("
+                SELECT titre, dateSortie, id_film
+                FROM film f
+                INNER JOIN jouer j ON f.id_film = j.film_id
+                WHERE acteur_id = :id
+            ");
+    
+            $requeteFilmDate->execute(["id" => $id]);
+    
+            require "view/realisateurs  /DetailRealisateurView.php";
+        }
 }

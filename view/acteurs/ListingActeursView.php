@@ -1,4 +1,6 @@
-<?php ob_start(); ?>
+<?php ob_start(); 
+
+?>
 
 <p>Il y a <?= $requete->rowCount() ?> acteurs</p>
 
@@ -13,8 +15,8 @@
         <?php
             foreach($requete->fetchAll() as $acteur) { ?>
                 <tr>
-                    <td><?= $acteur["prenom"] ?></td>
-                    <td><?= $acteur["nom"] ?></td>
+                    <td><a href='index.php?action=detailActeur&id=<?= $acteur["id_personne"] ?>'><?= $acteur["prenom"] ?></a></td>
+                    <td><a href='index.php?action=detailActeur&id=<?= $acteur["id_personne"] ?>'><?= $acteur["nom"] ?></a></td>
                 </tr>
         <?php } ?>
     </tbdoy>
