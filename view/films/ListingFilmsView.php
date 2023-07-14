@@ -1,4 +1,7 @@
-<?php ob_start();?>
+<?php ob_start();
+$requete->execute();
+$movie = $requete->fetchAll();
+?>
 
 <p>Il y a <?= $requete->rowCount() ?> films</p> 
 <a href='index.php?action=afficherRealisateurs'>Ajouter un film</a>
