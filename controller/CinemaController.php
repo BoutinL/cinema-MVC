@@ -116,74 +116,96 @@ class CinemaController {
         require "view/acteurs/DetailActeurView.php";
     }
 
-        // detail d'un realisateur
+    // detail d'un realisateur
 
-        public function detailRealisateur($id) {
+    public function detailRealisateur($id) {
 
-            $pdo = Connect::seConnecter();
-            $requeteDetailRealisateur = $pdo->prepare("
-                SELECT *
-                FROM personne p
-                INNER JOIN realisateur r ON p.id_personne = r.personne_id
-                WHERE p.id_personne = :id
-            ");
-    
-            $requeteDetailRealisateur->execute(["id" => $id]);
-    
-            $requeteFilmDate = $pdo->prepare("
-                SELECT titre, dateSortie, id_film
-                FROM film f
-                INNER JOIN jouer j ON f.id_film = j.film_id
-                WHERE acteur_id = :id
-            ");
-    
-            $requeteFilmDate->execute(["id" => $id]);
-    
-            require "view/realisateurs/DetailRealisateurView.php";
-        }
+        $pdo = Connect::seConnecter();
+        $requeteDetailRealisateur = $pdo->prepare("
+            SELECT *
+            FROM personne p
+            INNER JOIN realisateur r ON p.id_personne = r.personne_id
+            WHERE p.id_personne = :id
+        ");
 
-        // Ajouter un film
+        $requeteDetailRealisateur->execute(["id" => $id]);
 
-        public function afficherRealisateurs(){
+        $requeteFilmDate = $pdo->prepare("
+            SELECT titre, dateSortie, id_film
+            FROM film f
+            INNER JOIN jouer j ON f.id_film = j.film_id
+            WHERE acteur_id = :id
+        ");
 
-            $pdo = Connect::seConnecter();
-            $requeteListeRealisateur = $pdo->prepare("
-                SELECT *
-                FROM personne p
-                INNER JOIN realisateur r ON p.id_personne = r.personne_id
-            ");
-    
-            $requeteListeRealisateur->execute();
+        $requeteFilmDate->execute(["id" => $id]);
 
-            require "view/films/AjoutFilmView.php";
+        require "view/realisateurs/DetailRealisateurView.php";
+    }
 
-        }
+    // Ajouter un film
 
-        public function ajouterNouveauFilm(){
+    public function afficherRealisateurs(){
 
-            if(isset($_POST['submit'])){
-                $titre = filter_input(INPUT_POST, "titre", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-                $dateSortie = filter_input(INPUT_POST, "dateSortie", FILTER_SANITIZE_SPECIAL_CHARS);
-                $dureeMinutes = filter_input(INPUT_POST, "dureeMinutes", FILTER_VALIDATE_INT);
-                $note = filter_input(INPUT_POST, "note", FILTER_VALIDATE_INT);
-                $affiche = filter_input(INPUT_POST, "affiche", FILTER_SANITIZE_URL);
-                $realisateur = filter_input(INPUT_POST, "realisateur", FILTER_SANITIZE_SPECIAL_CHARS);
-            
-                if($titre && $dateSortie && $dureeMinutes && $note && $affiche && $realisateur){
+        $pdo = Connect::seConnecter();
+        $requeteListeRealisateur = $pdo->prepare("
+            SELECT *
+            FROM personne p
+            INNER JOIN realisateur r ON p.id_personne = r.personne_id
+        ");
 
-                    $pdo = Connect::seConnecter();
-                    $requeteAjoutNouveauFilm = $pdo->prepare("
-                        INSERT INTO film (titre, dateSortie, dureeMinutes, note, affiche, realisateur_id) 
-                        VALUES ('?', '?', ?, ?, '?', '?');
-                    ");
-        
-                    $requeteAjoutNouveauFilm->execute();
-        
-                    require "view/films/AjoutFilmView.php";
-                }
-                header("Location:index.php?action=listingFilmsView"); exit;
+        $requeteListeRealisateur->execute();
+
+        require "view/films/AjoutFilmView.php";
+
+    }
+
+    public function ajouterNouveauFilm(){
+        if(isset($_POST['submit'])){
+            $titre = filter_input(INPUT_POST, "titre", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $dateSortie = filter_input(INPUT_POST, "dateSortie", FILTER_SANITIZE_SPECIAL_CHARS);
+            $dureeMinutes = filter_input(INPUT_POST, "dureeMinutes", FILTER_VALIDATE_INT);
+            $note = filter_input(INPUT_POST, "note", FILTER_VALIDATE_INT);
+            $affiche = filter_input(INPUT_POST, "affiche", FILTER_SANITIZE_URL);
+            $realisateur = filter_input(INPUT_POST, "realisateur", FILTER_SANITIZE_SPECIAL_CHARS);
+
+            if($titre && $dateSortie && $dureeMinutes && $note && $affiche && $realisateur){
+
+                $pdo = Connect::seConnecter();
+                $requeteAjoutNouveauFilm = $pdo->prepare("
+                    INSERT INTO film (titre, dateSortie, dureeMinutes, note, affiche, realisateur_id) 
+                    VALUES (?, ?, ?, ?, ?, ?);
+                ");
+
+                // Liaison des valeurs des paramètres avec les variables
+                $requeteAjoutNouveauFilm->bindParam(1, $titre);
+                $requeteAjoutNouveauFilm->bindParam(2, $dateSortie);
+                $requeteAjoutNouveauFilm->bindParam(3, $dureeMinutes);
+                $requeteAjoutNouveauFilm->bindParam(4, $note);
+                $requeteAjoutNouveauFilm->bindParam(5, $affiche);
+                $requeteAjoutNouveauFilm->bindParam(6, $realisateur);
+
+                $requeteAjoutNouveauFilm->execute();
+
+                require "view/films/AjoutFilmView.php";
             }
-
+            header("Location:index.php?action=listFilms"); exit;
         }
+    }
+     // Ajouter un film
 
+    public function effacerFilm($id){
+
+        $pdo = Connect::seConnecter();
+        $requeteEffacerFilm = $pdo->prepare("
+            DELETE 
+            FROM film f
+            WHERE f.id_film = :id;
+        ");
+
+        $requeteEffacerFilm->execute(["id" => $id]);
+
+        require "view/films/ListingFilmsView.php";
+
+    }
 }
+

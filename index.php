@@ -19,6 +19,7 @@ if(isset($_GET["action"])){
         case "detailRealisateur" : $ctrlCinema->detailRealisateur($id); break;
         case "afficherRealisateurs" : $ctrlCinema->afficherRealisateurs(); break;
         case "ajouterNouveauFilm" : $ctrlCinema->ajouterNouveauFilm(); break;
+        case "effacerFilm" : $ctrlCinema->effacerFilm($id); break;
     }
 } else {
     $ctrlCinema->listFilms();

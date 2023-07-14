@@ -1,7 +1,7 @@
 <?php ob_start();?>
 
 <p>Il y a <?= $requete->rowCount() ?> films</p> 
-<a type="button" href='index.php?action=afficherRealisateurs'>Ajouter un film</a>
+<a href='index.php?action=afficherRealisateurs'>Ajouter un film</a>
 
 <table>
     <thead>
@@ -16,6 +16,7 @@
                 <tr>
                     <td><a href='index.php?action=detailFilm&id=<?= $film["id_film"] ?>'><?= $film["titre"] ?></td>
                     <td><?= $film["dateSortie"]?></td>
+                    <td><a href='index.php?action=effacerFilm&id=<?= $film["id_film"] ?>'>Effacer</a></td>
                 </tr>
         <?php } ?>
     </tbdoy>
