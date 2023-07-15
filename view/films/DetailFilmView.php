@@ -23,6 +23,7 @@
 ?>
 
 <section class="detail-film">
+<a href='index.php?action=modifierFilm'>Modifier ce film</a>
 <h3>Nom du film : <?= $film['titre'] ?></h3>
 <img src="<?= $film['affiche'] ?>" alt="">
 <p>Genre(s) : <?= $types ?></p>

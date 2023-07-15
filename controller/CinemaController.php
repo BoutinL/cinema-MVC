@@ -191,7 +191,8 @@ class CinemaController {
             header("Location:index.php?action=listFilms"); exit;
         }
     }
-     // Ajouter un film
+
+    // Effacer un film
 
     public function effacerFilm($id){
 
@@ -205,7 +206,21 @@ class CinemaController {
         $requeteEffacerFilm->execute(["id" => $id]);
 
         require "view/films/ListingFilmsView.php";
+    }
 
+    // Modifier un film
+
+    public function modifierFilm($id){
+
+        $pdo = Connect::seConnecter();
+        $requeteModifierFilm = $pdo->query("
+            UPDATE film
+            SET titre = :titre, dateSortie = :dateSortie, dureeMinutes = :dureMinutes, note= :note, affiche= :affhiche, realisateur_id= :realisateur;
+            WHERE id = :id;
+        ");
+
+        $requeteModifierFilm->execute(["id" => $id]);
+
+        require "view/films/ModifFilmsView.php";
     }
 }
-
