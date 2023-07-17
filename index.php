@@ -20,7 +20,7 @@ if(isset($_GET["action"])){
         case "ajouterFilm" : $ctrlCinema->afficherRealisateurs(); break;
         case "ajouterNouveauFilm" : $ctrlCinema->ajouterNouveauFilm(); break;
         case "effacerFilm" : $ctrlCinema->effacerFilm($id); break;
-        case "modifierFilm" : $ctrlCinema->modifierFilm($id); break;
+        case "afficherFilmModif" : $ctrlCinema->afficherFilmModif($id); break;
     }
 } else {
     $ctrlCinema->listFilms();

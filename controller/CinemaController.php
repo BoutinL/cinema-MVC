@@ -210,7 +210,7 @@ class CinemaController {
 
     // Modifier un film
 
-    public function modifierFilm($id){
+    public function afficherFilmModif($id){
 
         $pdo = Connect::seConnecter();
 
@@ -222,14 +222,33 @@ class CinemaController {
 
         $requete->execute(["id" => $id]);
 
-        $requeteModifierFilm = $pdo->query("
-            UPDATE film
-            SET titre = :titre, dateSortie = :dateSortie, dureeMinutes = :dureMinutes, note= :note, affiche= :affhiche, realisateur_id= :realisateur;
-            WHERE id = :id;
+        $pdo = Connect::seConnecter();
+        $requeteListeRealisateur = $pdo->prepare("
+            SELECT *
+            FROM personne p
+            INNER JOIN realisateur r ON p.id_personne = r.personne_id
         ");
 
-        $requeteModifierFilm->execute(["id" => $id]);
+        $requeteListeRealisateur->execute();
 
         require "view/films/ModifFilmView.php";
     }
+
+    public function modifierFilm($id){
+
+        $pdo = Connect::seConnecter();
+
+        $requeteModifierFilm = $pdo->query("
+        UPDATE film
+        SET titre = :titre, dateSortie = :dateSortie, dureeMinutes = :dureMinutes, note= :note, affiche= :affhiche, realisateur_id= :realisateur;
+        WHERE id = :id;
+    ");
+
+    $requeteModifierFilm->execute(["id" => $id]);
+
+    require "view/films/ListingFilmView.php";
+
+    }
+
+
 }

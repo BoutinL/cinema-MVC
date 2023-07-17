@@ -1,21 +1,21 @@
 <?php ob_start(); 
-$requete = $requete->fetch();
+$film = $requete->fetch();
 ?>
 
 <section class="form-modif-film">
     <form action="index.php?action=modifierFilm" method="post">
         <label for="titre">Titre :</label>
-        <input type="text" id="titre" name="titre" required><br/>
+        <input type="text" id="titre" name="titre" value="<?= $film['titre'] ?>" required><br/>
         <label for="dateSortie">Date de sortie :</label>
-        <input type="date" id="dateSortie" name="dateSortie"><br/>
+        <input type="date" id="dateSortie" name="dateSortie" value="<?= $film['dateSortie'] ?>"><br/>
         <label for="dureeMinutes">Durée en minutes :</label>
-        <input type="number" min="0" id="dureeMinutes" name="dureeMinutes"><br/>
+        <input type="number" min="0" id="dureeMinutes" name="dureeMinutes" value="<?= $film['dureeMinutes'] ?>"><br/>
         <label for="note">Note :</label>
-        <input type="number" min="0" max="5" id="note" name="note"><br/>
+        <input type="number" min="0" max="5" id="note" name="note" value="<?= $film['note'] ?>"><br/>
         <label for="affiche">Url de l'affiche :</label>
-        <input type="text" id="affiche" name="affiche"><br/>
+        <input type="text" id="affiche" name="affiche" value="<?= $film['affiche'] ?>"><br/>
         <label for="realisateur">Realisateur :</label>
-        <select id="realisateur" name="realisateur" required><br/>
+        <select id="realisateur" name="realisateur" value="<?= $film['realisateur_id'] ?>" required><br/>
         <?php 
             foreach($requeteListeRealisateur->fetchAll() as $realisateur){
                 $id = $realisateur['id_realisateur'];
