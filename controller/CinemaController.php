@@ -213,6 +213,15 @@ class CinemaController {
     public function modifierFilm($id){
 
         $pdo = Connect::seConnecter();
+
+        $requete = $pdo->prepare("
+            SELECT *
+            FROM film f
+            WHERE id_film = :id
+        ");
+
+        $requete->execute(["id" => $id]);
+
         $requeteModifierFilm = $pdo->query("
             UPDATE film
             SET titre = :titre, dateSortie = :dateSortie, dureeMinutes = :dureMinutes, note= :note, affiche= :affhiche, realisateur_id= :realisateur;
@@ -221,6 +230,6 @@ class CinemaController {
 
         $requeteModifierFilm->execute(["id" => $id]);
 
-        require "view/films/ModifFilmsView.php";
+        require "view/films/ModifFilmView.php";
     }
 }

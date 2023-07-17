@@ -1,4 +1,6 @@
-<?php ob_start(); ?>
+<?php ob_start(); 
+$requete = $requete->fetch();
+?>
 
 <section class="form-modif-film">
     <form action="index.php?action=modifierFilm" method="post">
