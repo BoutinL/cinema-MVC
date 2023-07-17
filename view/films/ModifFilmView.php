@@ -3,7 +3,7 @@ $film = $requete->fetch();
 ?>
 
 <section class="form-modif-film">
-    <form action="index.php?action=modifierFilm" method="post">
+    <form action="index.php?action=modifierFilm&titre=<?= $film["titre"] ?>&dateSortie=<?= $film["dateSortie"] ?>id=<?= $film["id_film"] ?>&dureeMinutes=<?= $film["dureeMinutes"] ?>id=<?= $film["dureeMinutes"] ?>&note=<?= $film["note"] ?>id=<?= $film["id_film"] ?>&affiche=<?= $film["affiche"] ?>id=<?= $film["id_film"] ?>&realisteur_id=<?= $film["realisateur_id"] ?>" method="post">
         <label for="titre">Titre :</label>
         <input type="text" id="titre" name="titre" value="<?= $film['titre'] ?>" required><br/>
         <label for="dateSortie">Date de sortie :</label>

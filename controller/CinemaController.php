@@ -234,7 +234,7 @@ class CinemaController {
         require "view/films/ModifFilmView.php";
     }
 
-    public function modifierFilm($id){
+    public function modifierFilm($id, $titre, $dateSortie, $dureeMinutes, $note, $affiche, $realisateur_id){
 
         $pdo = Connect::seConnecter();
 
@@ -244,7 +244,15 @@ class CinemaController {
         WHERE id = :id;
     ");
 
-    $requeteModifierFilm->execute(["id" => $id]);
+    $requeteModifierFilm->execute([
+        "id" => $id,
+        "titre" => $titre,
+        "dateSortie" => $dateSortie,
+        "dureeMinutes" => $dureeMinutes,
+        "note" => $note,
+        "affiche" => $affiche,
+        "realisateur_id" => $realisateur_id,
+    ]);
 
     require "view/films/ListingFilmView.php";
 
