@@ -1,6 +1,5 @@
 <?php ob_start();
 $film = $requete->fetch();
-$annee = date("Y", strtotime($film["dateSortie"]));
 ?>
 
 <p>Il y a <?= $requete->rowCount() ?> films</p> 
@@ -15,7 +14,8 @@ $annee = date("Y", strtotime($film["dateSortie"]));
     </thead>
     <tbody>
         <?php
-            foreach($requete->fetchAll() as $film) { ?>
+            foreach($requete->fetchAll() as $film) { 
+                $annee = date("Y", strtotime($film["dateSortie"])); var_dump($film); ?>
                 <tr>
                     <td><a href='index.php?action=detailFilm&id=<?= $film["id_film"] ?>'><?= $film["titre"] ?></td>
                     <td><?= $annee ?></td>

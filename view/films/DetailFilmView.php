@@ -19,7 +19,7 @@
     $minutes = $film['dureeMinutes'];
     $heures = floor($minutes / 60); // Obtient le nombre d'heures entières
     $minutesRestantes = $minutes % 60; // Obtient le nombre de minutes restantes
-    $heureMinute = sprintf("%02d:%02d", $heures, $minutesRestantes);
+    $heureMinute = sprintf("%2dh%02d", $heures, $minutesRestantes);
 ?>
 
 <section class="detail-film">
