@@ -24,7 +24,7 @@ $film = $requete->fetch();
                 echo "<option value=\"$id\">$prenom $nom</option>";
             }
         ?>
-        <input type="submit" value="Modifier">
+        <input type="submit" name ="submit" value="Modifier">
     </form>
 </section>
 <?php

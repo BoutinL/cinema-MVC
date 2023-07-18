@@ -161,7 +161,14 @@ class CinemaController {
 
     public function ajouterNouveauFilm(){
         if(isset($_POST['submit'])){
+            $titre = filter_input(INPUT_POST, "titre", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $dateSortie = filter_input(INPUT_POST, "dateSortie", FILTER_SANITIZE_SPECIAL_CHARS);
+            $dureeMinutes = filter_input(INPUT_POST, "dureeMinutes", FILTER_VALIDATE_INT);
+            $note = filter_input(INPUT_POST, "note", FILTER_VALIDATE_INT);
+            $affiche = filter_input(INPUT_POST, "affiche", FILTER_SANITIZE_SPECIAL_CHARS);
+            $realisateur = filter_input(INPUT_POST, "realisateur", FILTER_SANITIZE_SPECIAL_CHARS);
 
+            if($titre && $dateSortie && $dureeMinutes && $note && $affiche && $realisateur){
                 $pdo = Connect::seConnecter();
                 $requeteAjoutNouveauFilm = $pdo->prepare("
                     INSERT INTO film (titre, dateSortie, dureeMinutes, note, affiche, realisateur_id) 
@@ -177,10 +184,10 @@ class CinemaController {
                 $requeteAjoutNouveauFilm->bindParam(6, $realisateur);
 
                 $requeteAjoutNouveauFilm->execute();
-
+                header("Location:index.php?action=listFilms"); exit;
                 require "view/films/AjoutFilmView.php";
+            }
         }
-        header("Location:index.php?action=listFilms"); exit;
     }
 
     // Effacer un film
@@ -189,12 +196,15 @@ class CinemaController {
 
         $pdo = Connect::seConnecter();
         $requeteEffacerFilm = $pdo->prepare("
-            DELETE 
-            FROM film f
-            WHERE f.id_film = :id;
+            DELETE FROM film WHERE id_film = :id
         ");
 
-        $requeteEffacerFilm->execute(["id" => $id]);
+        $requeteEffacerFilm->execute(["id" => intval($id)]);
+
+        $requete = $pdo->query("
+        SELECT id_film, titre, dateSortie
+        FROM film
+        ");
 
         require "view/films/ListingFilmsView.php";
 
@@ -230,25 +240,34 @@ class CinemaController {
     public function modifierFilm($id, $titre, $dateSortie, $dureeMinutes, $note, $affiche, $realisateur_id){
 
         if(isset($_POST['submit'])){
-            
-            $pdo = Connect::seConnecter();
+            $titre = filter_input(INPUT_POST, "titre", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $dateSortie = filter_input(INPUT_POST, "dateSortie", FILTER_SANITIZE_SPECIAL_CHARS);
+            $dureeMinutes = filter_input(INPUT_POST, "dureeMinutes", FILTER_VALIDATE_INT);
+            $note = filter_input(INPUT_POST, "note", FILTER_VALIDATE_INT);
+            $affiche = filter_input(INPUT_POST, "affiche", FILTER_SANITIZE_SPECIAL_CHARS);
+            $realisateur = filter_input(INPUT_POST, "realisateur", FILTER_SANITIZE_SPECIAL_CHARS);
 
-            $requeteModifierFilm = $pdo->query("
-                UPDATE film
-                SET titre = :titre, dateSortie = :dateSortie, dureeMinutes = :dureMinutes, note= :note, affiche= :affiche, realisateur_id= :realisateur;
-                WHERE id = :id;
-            ");
+            if($titre && $dateSortie && $dureeMinutes && $note && $affiche && $realisateur){
+                $pdo = Connect::seConnecter();
 
-            $requeteModifierFilm->execute([
-                "id" => $id,
-                "titre" => $titre,
-                "dateSortie" => $dateSortie,
-                "dureeMinutes" => $dureeMinutes,
-                "note" => $note,
-                "affiche" => $affiche,
-                "realisateur_id" => $realisateur_id,
-            ]);
+                $requeteModifierFilm = $pdo->query("
+                    UPDATE film
+                    SET titre = :titre, dateSortie = :dateSortie, dureeMinutes = :dureMinutes, note= :note, affiche= :affiche, realisateur_id= :realisateur;
+                    WHERE id = :id;
+                ");
+
+                $requeteModifierFilm->execute([
+                    "id" => $id,
+                    "titre" => $titre,
+                    "dateSortie" => $dateSortie,
+                    "dureeMinutes" => $dureeMinutes,
+                    "note" => $note,
+                    "affiche" => $affiche,
+                    "realisateur_id" => $realisateur_id,
+                ]);
+                header("Location:index.php?action=listFilms"); exit;
+                require "view/films/ListingFilmViews.php";
+            }
         }
-        header("Location:index.php?action=listFilms"); exit;
     }
 }

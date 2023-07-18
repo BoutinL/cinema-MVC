@@ -22,7 +22,7 @@
                 echo "<option value=\"$id\">$prenom $nom</option>";
             }
         ?>
-        <input type="submit" value="Ajouter">
+        <input type="submit" name="submit" value="Ajouter">
     </form>
 </section>
 <?php
