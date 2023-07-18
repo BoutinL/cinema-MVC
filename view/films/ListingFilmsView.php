@@ -15,8 +15,9 @@ $film = $requete->fetch();
     <tbody>
         <?php
             foreach($requete->fetchAll() as $film) { 
-                $annee = date("Y", strtotime($film["dateSortie"])); var_dump($film); ?>
+                $annee = date("Y", strtotime($film["dateSortie"]));?>
                 <tr>
+                    <?= var_dump($film) ?>
                     <td><a href='index.php?action=detailFilm&id=<?= $film["id_film"] ?>'><?= $film["titre"] ?></td>
                     <td><?= $annee ?></td>
                     <td><a href='index.php?action=effacerFilm&id=<?= $film["id_film"] ?>'>Effacer</a></td>
