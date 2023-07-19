@@ -3,6 +3,7 @@
 ?>
 
 <p>Il y a <?= $requete->rowCount() ?> acteurs</p>
+<a href='index.php?action=ajouterNouvelActeur'>Ajouter un acteur</a>
 
 <table>
     <thead>

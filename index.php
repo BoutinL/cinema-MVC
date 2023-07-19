@@ -21,6 +21,7 @@ if(isset($_GET["action"])){
         case "ajouterNouveauFilm" : $ctrlCinema->ajouterNouveauFilm(); break;
         case "effacerFilm" : $ctrlCinema->effacerFilm($id); break;
         case "afficherFilmModif" : $ctrlCinema->afficherFilmModif($id); break;
+        case "ajouterNouvelActeur" : $ctrlCinema->ajouterNouvelActeur(); break;
     }
 } else {
     $ctrlCinema->listFilms();

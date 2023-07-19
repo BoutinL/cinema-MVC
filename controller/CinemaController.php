@@ -190,6 +190,34 @@ class CinemaController {
         }
     }
 
+    // Ajouter nouvel acteur 
+    public function ajouterNouvelActeur(){
+        if(isset($_POST['submit'])){
+            $nom = filter_input(INPUT_POST, "nom", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $prenom = filter_input(INPUT_POST, "prenom", FILTER_SANITIZE_SPECIAL_CHARS);
+            $sexe = filter_input(INPUT_POST, "sexe", FILTER_SANITIZE_SPECIAL_CHARS);
+            $dateNaissance = filter_input(INPUT_POST, "dateNaissance", FILTER_SANITIZE_SPECIAL_CHARS);
+
+            if($nom && $prenom && $sexe && $dateNaissance){
+                $pdo = Connect::seConnecter();
+                $requeteAjouterNouvelActeur = $pdo->prepare("
+                    INSERT INTO personne (nom, prenom, sexe, dateNaissance) 
+                    VALUES (?, ?, ?, ?);
+                ");
+
+                // Liaison des valeurs des paramètres avec les variables
+                $requeteAjouterNouvelActeur->bindParam(1, $nom);
+                $requeteAjouterNouvelActeur->bindParam(2, $prenom);
+                $requeteAjouterNouvelActeur->bindParam(3, $sexe);
+                $requeteAjouterNouvelActeur->bindParam(4, $dateNaissance);
+
+                $requeteAjouterNouvelActeur->execute();
+                header("Location:index.php?action=listingActeurs"); exit;
+                require "view/acteurs/AjoutActeurView.php";
+            }
+        }
+    }
+
     // Effacer un film
 
     public function effacerFilm($id){
@@ -247,13 +275,13 @@ class CinemaController {
             $affiche = filter_input(INPUT_POST, "affiche", FILTER_SANITIZE_SPECIAL_CHARS);
             $realisateur = filter_input(INPUT_POST, "realisateur", FILTER_SANITIZE_SPECIAL_CHARS);
 
-            if($titre && $dateSortie && $dureeMinutes && $note && $affiche && $realisateur){
+            if($titre && $dateSortie && $dureeMinutes !== false && $note !== false && $affiche && $realisateur){
                 $pdo = Connect::seConnecter();
 
-                $requeteModifierFilm = $pdo->query("
+                $requeteModifierFilm = $pdo->prepare("
                     UPDATE film
-                    SET titre = :titre, dateSortie = :dateSortie, dureeMinutes = :dureMinutes, note= :note, affiche= :affiche, realisateur_id= :realisateur;
-                    WHERE id = :id;
+                    SET titre = :titre, dateSortie = :dateSortie, dureeMinutes = :dureMinutes, note= :note, affiche= :affiche, realisateur_id= :realisateur
+                    WHERE id = :id
                 ");
 
                 $requeteModifierFilm->execute([
@@ -266,8 +294,8 @@ class CinemaController {
                     "realisateur_id" => $realisateur_id,
                 ]);
                 header("Location:index.php?action=listFilms"); exit;
-                require "view/films/ListingFilmViews.php";
             }
         }
+        require "view/films/ModifFilmView.php";
     }
 }

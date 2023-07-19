@@ -3,7 +3,7 @@ $film = $requete->fetch();
 ?>
 
 <section class="form-modif-film">
-    <form action="index.php?action=modifierFilm&titre=<?= $film["titre"] ?>&dateSortie=<?= $film["dateSortie"] ?>id=<?= $film["id_film"] ?>&dureeMinutes=<?= $film["dureeMinutes"] ?>id=<?= $film["dureeMinutes"] ?>&note=<?= $film["note"] ?>id=<?= $film["id_film"] ?>&affiche=<?= $film["affiche"] ?>id=<?= $film["id_film"] ?>&realisteur_id=<?= $film["realisateur_id"] ?>" method="post">
+    <form action="index.php?action=modifierFilm&id=<?= $film["id_film"] ?>" method="post">
         <label for="titre">Titre :</label>
         <input type="text" id="titre" name="titre" value="<?= $film['titre'] ?>" required><br/>
         <label for="dateSortie">Date de sortie :</label>
@@ -15,15 +15,17 @@ $film = $requete->fetch();
         <label for="affiche">Url de l'affiche :</label>
         <input type="text" id="affiche" name="affiche" value="<?= $film['affiche'] ?>"><br/>
         <label for="realisateur">Realisateur :</label>
-        <select id="realisateur" name="realisateur" value="<?= $film['realisateur_id'] ?>" required><br/>
-        <?php 
-            foreach($requeteListeRealisateur->fetchAll() as $realisateur){
+        <select id="realisateur" name="realisateur" required>
+            <?php 
+            foreach($requeteListeRealisateur->fetchAll() as $realisateur) {
                 $id = $realisateur['id_realisateur'];
                 $prenom = $realisateur['prenom'];
                 $nom = $realisateur['nom'];
-                echo "<option value=\"$id\">$prenom $nom</option>";
+                $selected = ($id == $film['realisateur_id']) ? "selected" : "";
+                echo "<option value=\"$id\" $selected>$prenom $nom</option>";
             }
-        ?>
+            ?>
+        </select><br/>
         <input type="submit" name ="submit" value="Modifier">
     </form>
 </section>
