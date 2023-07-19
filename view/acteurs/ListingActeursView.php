@@ -18,6 +18,7 @@
                 <tr>
                     <td><a href='index.php?action=detailActeur&id=<?= $acteur["id_personne"] ?>'><?= $acteur["prenom"] ?></a></td>
                     <td><a href='index.php?action=detailActeur&id=<?= $acteur["id_personne"] ?>'><?= $acteur["nom"] ?></a></td>
+                    <td><a href='index.php?action=effacerActeur&id=<?= $acteur["id_personne"] ?>'>Effacer</a></td>
                 </tr>
         <?php } ?>
     </tbdoy>

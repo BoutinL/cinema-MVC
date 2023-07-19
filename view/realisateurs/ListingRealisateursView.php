@@ -1,6 +1,7 @@
 <?php ob_start(); ?>
 
 <p>Il y a <?= $requete->rowCount() ?> realisateurs</p>
+<a href='index.php?action=ajouterNouveauRealisateur'>Ajouter un realisateur</a>
 
 <table>
     <thead>
